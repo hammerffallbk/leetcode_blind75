@@ -1,47 +1,29 @@
 package interval
 
+// insert
+// 1.- we verify the edge case when intervals is empty
+// 2.- We insert all the intervals that are before our newInterval
+// 3.- We reduce all the intervals that are in between
+// 4.- We insert all the remaining intervals
 func insert(intervals [][]int, newInterval []int) [][]int {
 	if len(intervals) == 0 {
 		return [][]int{newInterval}
 	}
 	result := make([][]int, 0, len(intervals)+1)
-	var inserted bool
-	var lastInserted []int
-
-	for _, interval := range intervals {
-		if inserted {
-			result = append(result, interval)
-		} else {
-			if newInterval[0] > interval[1] {
-				result = append(result, interval)
-			} else {
-				if lastInserted != nil {
-					if lastInserted[1] >= interval[0] {
-						if interval[1] == max(interval[1], lastInserted[1]) {
-							inserted = true
-							lastInserted[1] = interval[1]
-						}
-					} else {
-						inserted = true
-						result = append(result, interval)
-					}
-					continue
-				}
-				if newInterval[0] >= interval[0] {
-					lastInserted = []int{interval[0], max(interval[1], newInterval[1])}
-					if interval[1] == lastInserted[1] {
-						inserted = true
-					}
-					result = append(result, lastInserted)
-				}
-			}
-		}
+	var i int
+	for i < len(intervals) && newInterval[0] > intervals[i][1] {
+		result = append(result, intervals[i])
+		i++
 	}
-	if lastInserted[1] == newInterval[1] {
-		inserted = true
+	newInt := newInterval
+	for i < len(intervals) && intervals[i][0] <= newInt[1] {
+		newInt = []int{min(intervals[i][0], newInt[0]), max(intervals[i][1], newInt[1])}
+		i++
 	}
-	if !inserted {
-		result = append(result, newInterval)
+	result = append(result, newInt)
+	for i < len(intervals) {
+		result = append(result, intervals[i])
+		i++
 	}
 	return result
 }
