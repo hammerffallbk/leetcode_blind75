@@ -1,9 +1,15 @@
 package interval
 
+import "sort"
+
 func merge(intervals [][]int) [][]int {
 	if len(intervals) == 0 {
 		return nil
 	}
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+
 	result := make([][]int, 0, len(intervals))
 	current := []int{intervals[0][0], intervals[0][1]}
 	for i := 1; i < len(intervals); i++ {
