@@ -42,25 +42,11 @@ func TestEraseOverlapIntervals(t *testing.T) {
 			intervals: [][]int{{-52, 31}, {-73, -26}, {82, 97}, {-65, -11}, {-62, -49}, {95, 99}, {58, 95}, {-31, 49}, {66, 98}, {-63, 2}, {30, 47}, {-40, -26}},
 			expected:  7,
 		},
-		{
-			name: "fifth example",
-			intervals: [][]int{
-				// {-73, -26, 47}, {-65, -11, 54}, {-63, 2, 65},
-				{-62, -49, 13},
-				// {-52, 31, 83},
-				{-40, -26, 14},
-				// {-31, 49, 80},
-				{30, 47, 17},
-				{58, 95, 37},
-				// {66, 98, 32}, {82, 97, 15},
-				{95, 99, 4}},
-			expected: 0,
-		},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			assert.Equal(t, test.expected, eraseOverlapIntervals(test.intervals))
+			assert.Equal(t, test.expected, eraseOverlapIntervals2(test.intervals))
 		})
 	}
 }

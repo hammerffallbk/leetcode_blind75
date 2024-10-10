@@ -2,6 +2,7 @@ package interval
 
 import (
 	"fmt"
+	"math"
 	"sort"
 )
 
@@ -34,6 +35,22 @@ func eraseOverlapIntervals(intervals [][]int) int {
 		}
 	}
 
+	return result
+}
+
+func eraseOverlapIntervals2(intervals [][]int) int {
+	var result int
+	lastEnd := math.MinInt32
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][1] < intervals[j][1]
+	})
+	for _, interval := range intervals {
+		if interval[0] >= lastEnd {
+			lastEnd = interval[1]
+		} else {
+			result++
+		}
+	}
 	return result
 }
 
