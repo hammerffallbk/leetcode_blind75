@@ -38,6 +38,12 @@ func eraseOverlapIntervals(intervals [][]int) int {
 	return result
 }
 
+// eraseOverlapIntervals2
+// we order the intervals by the end point
+// we set last end value to minimum int
+// for every interval on our list, we see if the interval overlaps with the last end
+// if it does, we increase our erase counter
+// otherwise we update our last_end to the current interval end
 func eraseOverlapIntervals2(intervals [][]int) int {
 	var result int
 	lastEnd := math.MinInt32
